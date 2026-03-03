@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CMACED – Startup Intelligence Dashboard | Superior University × ID92</title>
+  <meta name="description" content="Official startup opportunity intelligence platform for CMACED – Superior University, powered by ID92. Discover grants, accelerators, competitions and fellowships." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="header-brand">
+        <div class="brand-logos">
+          <div class="logo-block cmaced-logo">
+            <span class="logo-text-main">CMACED</span>
+            <span class="logo-text-sub">Superior University</span>
+          </div>
+          <div class="logo-divider"></div>
+          <div class="logo-block id92-logo">
+            <span class="logo-text-main id92">ID92</span>
+            <span class="logo-text-sub">Powered by</span>
+          </div>
+        </div>
+        <div class="header-tagline">Startup Intelligence Dashboard</div>
+      </div>
+      <div class="header-actions">
+        <div class="last-updated-badge" id="lastUpdated">
+          <span class="pulse-dot"></span>
+          <span id="lastUpdatedText">Loading…</span>
+        </div>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+          <span class="theme-icon light-icon">☀</span>
+          <span class="theme-icon dark-icon">◑</span>
+        </button>
+        <button class="btn btn-outline" id="exportBtn">
+          ↓ Export CSV
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO BANNER -->
+  <section class="hero-section">
+    <div class="hero-inner">
+      <div class="hero-content">
+        <div class="hero-eyebrow">Official Platform · Updated Daily</div>
+        <h1 class="hero-title">Discover Startup <span class="hero-accent">Opportunities</span></h1>
+        <p class="hero-sub">Curated grants, accelerators, competitions &amp; fellowships for Pakistani entrepreneurs — verified in real time.</p>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-geo geo-1"></div>
+        <div class="hero-geo geo-2"></div>
+        <div class="hero-geo geo-3"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS BAR -->
+  <section class="stats-section">
+    <div class="stats-inner">
+      <div class="stat-card" data-stat="total">
+        <div class="stat-num" id="statTotal">—</div>
+        <div class="stat-label">Total Opportunities</div>
+      </div>
+      <div class="stat-card national" data-stat="national">
+        <div class="stat-num" id="statNational">—</div>
+        <div class="stat-label">🇵🇰 Pakistan</div>
+      </div>
+      <div class="stat-card" data-stat="international">
+        <div class="stat-num" id="statIntl">—</div>
+        <div class="stat-label">🌍 International</div>
+      </div>
+      <div class="stat-card urgent" data-stat="closing">
+        <div class="stat-num" id="statClosing">—</div>
+        <div class="stat-label">⏳ Closing Soon</div>
+      </div>
+      <div class="stat-card fresh" data-stat="new">
+        <div class="stat-num" id="statNew">—</div>
+        <div class="stat-label">✦ New (48h)</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+
+    <!-- CONTROLS -->
+    <div class="controls-bar">
+      <div class="search-wrap">
+        <span class="search-icon">⌕</span>
+        <input type="text" id="searchInput" class="search-input" placeholder="Search opportunities, organizations…" />
+        <button class="search-clear" id="searchClear" aria-label="Clear search">✕</button>
+      </div>
+      <div class="filter-sort-row">
+        <select id="sortSelect" class="select-control">
+          <option value="deadline">Sort: Deadline (soonest)</option>
+          <option value="new">Sort: Newest first</option>
+          <option value="prize">Sort: Prize (highest)</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- TABS -->
+    <nav class="tabs-nav" role="tablist">
+      <button class="tab-btn active" data-tab="all" role="tab">All</button>
+      <button class="tab-btn" data-tab="national" role="tab">🇵🇰 National</button>
+      <button class="tab-btn" data-tab="international" role="tab">🌍 International</button>
+      <button class="tab-btn" data-tab="grant" role="tab">Grants</button>
+      <button class="tab-btn" data-tab="competition" role="tab">Competitions</button>
+      <button class="tab-btn" data-tab="hackathon" role="tab">Hackathons</button>
+      <button class="tab-btn" data-tab="accelerator" role="tab">Accelerators</button>
+      <button class="tab-btn" data-tab="fellowship" role="tab">Fellowships</button>
+      <button class="tab-btn closing-tab" data-tab="closing" role="tab">⏳ Closing Soon</button>
+      <button class="tab-btn archive-tab" data-tab="archive" role="tab">Archive</button>
+    </nav>
+
+    <!-- RESULTS META -->
+    <div class="results-meta">
+      <span id="resultsCount">Loading opportunities…</span>
+    </div>
+
+    <!-- OPPORTUNITIES GRID -->
+    <div id="opportunitiesGrid" class="opp-grid">
+      <div class="loading-state">
+        <div class="loader-ring"></div>
+        <p>Loading opportunities…</p>
+      </div>
+    </div>
+
+    <!-- EMPTY STATE -->
+    <div id="emptyState" class="empty-state" hidden>
+      <div class="empty-icon">◎</div>
+      <h3>No opportunities found</h3>
+      <p>Try adjusting your filters or search terms.</p>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="footer-logo">CMACED × ID92</span>
+        <p>Official Startup Intelligence Platform<br/>Superior University, Lahore, Pakistan</p>
+      </div>
+      <div class="footer-links">
+        <a href="https://superior.edu.pk" target="_blank" rel="noopener">Superior University</a>
+        <a href="#" id="footerExport">Download Archive CSV</a>
+      </div>
+      <div class="footer-note">
+        Data sourced exclusively from official program websites.<br/>
+        Links verified every 24 hours. No unofficial or unverified entries.
+      </div>
+    </div>
+  </footer>
+
+  <!-- CARD MODAL -->
+  <div id="modalOverlay" class="modal-overlay" hidden>
+    <div class="modal-card" role="dialog" aria-modal="true">
+      <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
